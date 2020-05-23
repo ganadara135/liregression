@@ -60,7 +60,12 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
       // console.log(timeseries, measure);
       let forcastTime = timeseries.map((unix: any) => {
         let dyDate = new Date(unix);
-        let plusTime = dyDate.valueOf() + 600000; // 1분 플러스
+        // let plusTime = dyDate.valueOf() + 600000; // 1분 플러스
+        // console.log('getTime(): ', dyDate.getTime());
+        let benchmark = timeseries[timeseries.length - 1];
+        let dyBenchdyDate = benchmark - dyDate.getTime();
+        console.log('차이값: ', dyBenchdyDate);
+        let plusTime = benchmark + dyBenchdyDate + 600000;
         return {
           myDate: plusTime,
         };
@@ -152,19 +157,6 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         `
       )}
     >
-      {/* <svg
-        className={styles.svg}
-        width={width}
-        height={height}
-        xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        viewBox={`-${width / 2} -${height / 2} ${width} ${height}`}
-      >
-        <g>
-          <circle style={{ fill: `${theme.isLight ? theme.palette.greenBase : theme.palette.blue95}` }} r={100} />
-        </g>
-      </svg> */}
-
       {/* <div className={styles.textBox}>
         {options.showSeriesCount && (
           <div
@@ -177,7 +169,9 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         )}
         <div>Text option value: {options.text}</div>
       </div> */}
-      <svg id="chart" width={width} height={height} viewBox={`-${1} -${1} ${width} ${height}`} ref={d3Container}></svg>
+      <svg id="chart" width={width} height={height} viewBox={`-${1} -${1} ${width} ${height}`} ref={d3Container}>
+        <g></g>
+      </svg>
     </div>
   );
 };
