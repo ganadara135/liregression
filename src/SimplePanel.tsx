@@ -64,7 +64,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         // console.log('getTime(): ', dyDate.getTime());
         let benchmark = timeseries[timeseries.length - 1];
         let dyBenchdyDate = benchmark - dyDate.getTime();
-        console.log('차이값: ', dyBenchdyDate);
+        // console.log('차이값: ', dyBenchdyDate);
         let plusTime = benchmark + dyBenchdyDate + 600000;
         return {
           myDate: plusTime,
@@ -84,12 +84,12 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
       });
 
       // console.log('result : ', forecastResult.volume);
-      forecastResult.unshift({
+      const attachedForecastResult = forecastResult.concat({
         date: new Date(timeseries[timeseries.length - 1]),
         volume: measure[measure.length - 1],
       });
       console.log('currenHistory: ', currentHistory);
-      console.log('forcatResult: ', forecastResult);
+      console.log('attachedForecastResult: ', attachedForecastResult);
 
       // 화면 지우기
       // const svg = d3.select('svg');
@@ -110,7 +110,10 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         .x(d => x(d.date as Date))
         .y(d => y(d.volume as number));
 
-      x.domain([d3.min<MyPropsType>(currentHistory, d => d.date), d3.max<MyPropsType>(forecastResult, d => d.date)]);
+      x.domain([
+        d3.min<MyPropsType>(currentHistory, d => d.date),
+        d3.max<MyPropsType>(attachedForecastResult, d => d.date),
+      ]);
       y.domain([0, d3.max<MyPropsType>(currentHistory, d => d.volume)]);
 
       innerChart
@@ -139,7 +142,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
 
       innerChart
         .append('path')
-        .datum(forecastResult)
+        .datum(attachedForecastResult)
         .attr('fill', 'none')
         .attr('stroke', 'tomato')
         .attr('stroke-dasharray', '10,7')
