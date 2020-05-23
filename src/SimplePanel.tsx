@@ -5,6 +5,15 @@ import { css, cx } from 'emotion';
 import { stylesFactory } from '@grafana/ui';
 
 import * as d3 from 'd3';
+import { Select } from '@grafana/ui';
+
+export interface SelectableValue<T = any> {
+  label?: string;
+  value?: T;
+  imgUrl?: string;
+  description?: string;
+  [key: string]: any;
+}
 
 interface MyPropsType {
   date?: Date;
@@ -20,10 +29,24 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
   const styles = getStyles();
   const d3Container = useRef(null);
 
-  // console.log('props: ', props);
-  // data  안에 시간간격 및 모든 데이터 다 있음
+  const [selectVal, setSelectVal] = useState<number>();
+  const [fieldKeys, setFieldKeys] = useState<Array<SelectableValue<number>>>();
 
   useEffect(() => {
+    setFieldKeys([
+      {
+        label: '1분',
+        description: '레이블설명',
+        value: 600000,
+      },
+      {
+        label: '10분',
+        description: '레이블설명',
+        value: 600000 * 10,
+      },
+    ]);
+    console.log(selectVal);
+
     if (d3Container.current && data.series[0]?.fields[0].values.length > 0) {
       console.log('data field[0].name: ', data.series[0]?.fields[0].name);
       console.log('data field[1].name: ', data.series[0]?.fields[1].name);
@@ -39,6 +62,13 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
       // }
       const arr = data.series[0];
       console.log('arr : ', arr);
+      console.log('options: ', options);
+      console.log('data: ', data);
+      // $__interval;
+      // $timeFilter;
+      // interval;
+      // // IntervalValues =
+      // console.log("IntervalValues: ", IntervalValues)
 
       setTimeseries(data.series[0]?.fields[0].values.toArray());
       setMeasure(data.series[0]?.fields[1].values.toArray());
@@ -65,7 +95,9 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         let benchmark = timeseries[timeseries.length - 1];
         let dyBenchdyDate = benchmark - dyDate.getTime();
         // console.log('차이값: ', dyBenchdyDate);
-        let plusTime = benchmark + dyBenchdyDate + 600000;
+        // let plusTime = benchmark + dyBenchdyDate + 60000;
+        console.log('체크: ', fieldKeys?.find(el => el.value === selectVal)?.value);
+        let plusTime = benchmark + dyBenchdyDate + fieldKeys?.find(el => el.value === selectVal)?.value;
         return {
           myDate: plusTime,
         };
@@ -149,7 +181,13 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         .attr('stroke-width', 5.5)
         .attr('d', line);
     }
-  }, [width, height, data]);
+  }, [width, height, data, selectVal]);
+
+  const onInput = (val: any) => {
+    console.log('target value index : ', val);
+    setSelectVal(val);
+  };
+
   return (
     <div
       className={cx(
@@ -160,18 +198,14 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         `
       )}
     >
-      {/* <div className={styles.textBox}>
-        {options.showSeriesCount && (
-          <div
-            className={css`
-              font-size: ${theme.typography.size[options.seriesCountSize]};
-            `}
-          >
-            Number of series: {data.series.length}
-          </div>
-        )}
-        <div>Text option value: {options.text}</div>
-      </div> */}
+      <h3>{'예상할 시간을 선택하세요(예-10분 예측)'}</h3>
+      <Select
+        // value={fieldKeys}
+        // options={myOptions}
+        options={fieldKeys}
+        placeholder="예상 시간 선택"
+        onChange={item => onInput(item.value)}
+      />
       <svg id="chart" width={width} height={height} viewBox={`-${1} -${1} ${width} ${height}`} ref={d3Container}>
         <g></g>
       </svg>
