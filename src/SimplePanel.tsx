@@ -87,16 +87,18 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
       console.log('forcatResult: ', forecastResult);
 
       // 화면 지우기
-      const svg = d3.select('svg');
-      svg.selectAll('*').remove();
+      // const svg = d3.select('svg');
+      // svg.selectAll('svg > *').remove();
+      d3.selectAll('svg > g > *').remove();
+
       const chart = d3.select('#chart');
       const margin = { top: 20, right: 20, bottom: 30, left: 70 };
-      const width = 1000 - margin.left - margin.right;
-      const height = 500 - margin.top - margin.bottom;
+      const widthIn = width - margin.left - margin.right;
+      const heightIn = height - margin.top - margin.bottom;
       const innerChart = chart.append('g').attr('transform', `translate(${margin.left} ${margin.top})`);
 
-      const x = d3.scaleTime().rangeRound([0, width]);
-      const y = d3.scaleLinear().rangeRound([height, 0]);
+      const x = d3.scaleTime().rangeRound([0, widthIn]);
+      const y = d3.scaleLinear().rangeRound([heightIn, 0]);
 
       const line = d3
         .line<MyPropsType>()
@@ -108,7 +110,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
 
       innerChart
         .append('g')
-        .attr('transform', `translate(0 ${height})`)
+        .attr('transform', `translate(0 ${heightIn})`)
         .call(d3.axisBottom(x));
 
       innerChart
@@ -150,18 +152,6 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         `
       )}
     >
-      {/* <table>
-        <tr>
-          <td>{data.series[0]?.fields[0].name}</td>
-          <td>{data.series[0]?.fields[1].name}</td>
-        </tr>
-        {timeseries.map((elem: any) => (
-          <tr>
-            <td>{elem}</td>
-          </tr>
-        ))}
-      </table> */}
-
       {/* <svg
         className={styles.svg}
         width={width}
@@ -187,7 +177,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         )}
         <div>Text option value: {options.text}</div>
       </div> */}
-      <svg id="chart" viewBox="0 0 1000 500" ref={d3Container}></svg>
+      <svg id="chart" width={width} height={height} viewBox={`-${1} -${1} ${width} ${height}`} ref={d3Container}></svg>
     </div>
   );
 };
