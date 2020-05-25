@@ -60,12 +60,12 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
 
     // if (d3Container.current && data.series[0]?.fields[0].values.length > 0) {
     if (d3Container.current && timeseries.length > 0) {
-      const arr = data.series[0];
-      console.log('arr : ', arr);
-      console.log('options: ', options);
-      console.log('data: ', data);
+      // const arr = data.series[0];
+      // console.log('arr : ', arr);
+      // console.log('options: ', options);
+      // console.log('data: ', data);
 
-      console.log('toArray(): ', data.series[0]?.fields[0].values.toArray());
+      // console.log('toArray(): ', data.series[0]?.fields[0].values.toArray());
 
       // setTimeseries(data.series[0]?.fields[0].values.toArray());
       // setMeasure(data.series[0]?.fields[1].values.toArray());
@@ -98,7 +98,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         // // console.log("dyBenchdyDate: ", dyBenchdyDate)
         // console.log('차이값: ', dyBenchdyDate);
         // // let plusTime = benchmark + dyBenchdyDate + 60000;
-        console.log('체크: ', fieldKeys?.find(el => el.value === selectVal)?.value);
+        // console.log('체크: ', fieldKeys?.find(el => el.value === selectVal)?.value);
         // let plusTime = benchmark + dyBenchdyDate + fieldKeys?.find(el => el.value === selectVal)?.value;
         let plusTime = benchmark + fieldKeys?.find(el => el.value === selectVal)?.value;
         return {
@@ -118,14 +118,14 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         };
       });
 
-      console.log('timeseries : ', timeseries);
-      console.log('forecastResult : ', forecastResult);
+      // console.log('timeseries : ', timeseries);
+      // console.log('forecastResult : ', forecastResult);
       const attachedForecastResult = forecastResult.concat({
         date: new Date(timeseries[timeseries.length - 1]),
         volume: measure[measure.length - 1],
       });
       // console.log('currenHistory: ', currentHistory);
-      console.log('attachedForecastResult: ', attachedForecastResult);
+      // console.log('attachedForecastResult: ', attachedForecastResult);
 
       // 화면 지우기
       // const svg = d3.select('svg');
@@ -183,7 +183,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         .attr('d', line);
 
       // if ( attachedForecastResult.length > 0)
-      console.log(' attachedForecastResult :  디폴트로 뜰때 에러 잡기 ');
+      // console.log(' attachedForecastResult :  디폴트로 뜰때 에러 잡기 ');
       innerChart
         .append('path')
         .datum(attachedForecastResult)
