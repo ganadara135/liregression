@@ -3,48 +3,13 @@
 
 위에서 max interface 에서   any 타입 넣음
 
-# The image on operation
-![ligression](https://user-images.githubusercontent.com/24896007/82754081-8d3f9180-9e05-11ea-9e59-a4996938f7e6.png)
+# The image on operation with Grafana
+![스크린샷 2020-05-25 23 54 50](https://user-images.githubusercontent.com/24896007/82824298-0ca39280-9ee4-11ea-99fa-c6f15bec8d63.png)
 
+![스크린샷 2020-05-25 23 55 02](https://user-images.githubusercontent.com/24896007/82824305-10cfb000-9ee4-11ea-8f04-990c86409dd8.png)
 
-# Grafana Panel Plugin Template
+![스크린샷 2020-05-25 23 55 19](https://user-images.githubusercontent.com/24896007/82824311-13320a00-9ee4-11ea-9297-d555c672bfd5.png)
 
-<!-- 
-[![CircleCI](https://circleci.com/gh/grafana/simple-react-panel.svg?style=svg)](https://circleci.com/gh/grafana/simple-react-panel)
-[![David Dependency Status](https://david-dm.org/grafana/simple-react-panel.svg)](https://david-dm.org/grafana/simple-react-panel)
-[![David Dev Dependency Status](https://david-dm.org/grafana/simple-react-panel/dev-status.svg)](https://david-dm.org/grafana/simple-react-panel/?type=dev)
-[![Known Vulnerabilities](https://snyk.io/test/github/grafana/simple-react-panel/badge.svg)](https://snyk.io/test/github/grafana/simple-react-panel)
-[![Maintainability](https://api.codeclimate.com/v1/badges/1dee2585eb412f913cbb/maintainability)](https://codeclimate.com/github/grafana/simple-react-panel/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/1dee2585eb412f913cbb/test_coverage)](https://codeclimate.com/github/grafana/simple-react-panel/test_coverage) -->
+![스크린샷 2020-05-25 23 56 23](https://user-images.githubusercontent.com/24896007/82824319-15946400-9ee4-11ea-8158-b6c8a8b969c4.png)
 
-This template is a starting point for building Grafana Panel Plugins in Grafana 7.0+
-
-
-## What is Grafana Panel Plugin?
-Panels are the building blocks of Grafana. They allow you to visualize data in different ways. While Grafana has several types of panels already built-in, you can also build your own panel, to add support for other visualizations.
-
-For more information about panels, refer to the documentation on [Panels](https://grafana.com/docs/grafana/latest/features/panels/panels/)
-
-## Getting started
-1. Install dependencies
-```BASH
-yarn install
-```
-2. Build plugin in development mode or run in watch mode
-```BASH
-yarn dev
-```
-or
-```BASH
-yarn watch
-```
-3. Build plugin in production mode
-```BASH
-yarn build
-```
-
-## Learn more
-- [Build a panel plugin tutorial](https://grafana.com/tutorials/build-a-panel-plugin)
-- [Grafana documentation](https://grafana.com/docs/)
-- [Grafana Tutorials](https://grafana.com/tutorials/) - Grafana Tutorials are step-by-step guides that help you make the most of Grafana
-- [Grafana UI Library](https://developers.grafana.com/ui) - UI components to help you build interfaces using Grafana Design System
+![스크린샷 2020-05-25 23 56 36](https://user-images.githubusercontent.com/24896007/82824325-17f6be00-9ee4-11ea-8221-188ead44b226.png)
