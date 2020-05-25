@@ -1,7 +1,7 @@
 # 개인적인 수정 분
 @type/d3 -> d3-array -> index.d.ts
 
-위에서 max interface 에서   any  넣음
+위에서 max interface 에서   any 타입 넣음
 
 # The image on operation
 ![ligression](https://user-images.githubusercontent.com/24896007/82754081-8d3f9180-9e05-11ea-9e59-a4996938f7e6.png)

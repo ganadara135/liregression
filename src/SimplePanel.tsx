@@ -33,26 +33,34 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
   const [fieldKeys, setFieldKeys] = useState<Array<SelectableValue<number>>>();
 
   useEffect(() => {
+    // 1 days equales 86,400 seconds on Epoch time(UNIX)
+    // 1 hours equals 3,600 seconds
+    // 10 munites equals 600 seconds
     setFieldKeys([
       {
         label: '1분',
-        description: '레이블설명',
-        value: 600000,
+        description: 'Forcast 1 minutes',
+        value: 60000,
       },
       {
         label: '10분',
-        description: '레이블설명',
-        value: 600000 * 10,
+        description: 'Forcast 10 minutes',
+        value: 600000,
+      },
+      {
+        label: '60분',
+        description: 'Forcast 60 minutes',
+        value: 3600000,
       },
     ]);
     console.log(selectVal);
 
     if (d3Container.current && data.series[0]?.fields[0].values.length > 0) {
-      console.log('data field[0].name: ', data.series[0]?.fields[0].name);
-      console.log('data field[1].name: ', data.series[0]?.fields[1].name);
-      console.log('data field[0].values.length: ', data.series[0]?.fields[0].values.length);
-      console.log('data field[1].values.length: ', data.series[0]?.fields[1].values.length);
-      console.log('data field[0].values: ', data.series[0]?.fields[0].values);
+      // console.log('data field[0].name: ', data.series[0]?.fields[0].name);
+      // console.log('data field[1].name: ', data.series[0]?.fields[1].name);
+      // console.log('data field[0].values.length: ', data.series[0]?.fields[0].values.length);
+      // console.log('data field[1].values.length: ', data.series[0]?.fields[1].values.length);
+      // console.log('data field[0].values: ', data.series[0]?.fields[0].values);
       // const arr = data.series[0]?.fields[0].values;
       // console.log('arr : ', arr);
       // // console.log('arr.get(0) : ', arr.get(0));
@@ -89,22 +97,28 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
 
       // console.log(timeseries, measure);
       let forcastTime = timeseries.map((unix: any) => {
-        let dyDate = new Date(unix);
+        // let dyDate = new Date(unix);
         // let plusTime = dyDate.valueOf() + 600000; // 1분 플러스
         // console.log('getTime(): ', dyDate.getTime());
-        let benchmark = timeseries[timeseries.length - 1];
-        let dyBenchdyDate = benchmark - dyDate.getTime();
+        let benchmark = timeseries[timeseries.length - 1]; // 최종 마지막 시간
+
+        // let dyBenchdyDate = benchmark - dyDate.getTime();
+        // // console.log('benchmark: ', benchmark);
+        // console.log('기준시간: : ', new Date(benchmark));
+        // console.log('dyDate.getTime(): ', dyDate.getTime());
+        // // console.log("dyBenchdyDate: ", dyBenchdyDate)
         // console.log('차이값: ', dyBenchdyDate);
-        // let plusTime = benchmark + dyBenchdyDate + 60000;
-        console.log('체크: ', fieldKeys?.find(el => el.value === selectVal)?.value);
-        let plusTime = benchmark + dyBenchdyDate + fieldKeys?.find(el => el.value === selectVal)?.value;
+        // // let plusTime = benchmark + dyBenchdyDate + 60000;
+        // console.log('체크: ', fieldKeys?.find(el => el.value === selectVal)?.value);
+        // let plusTime = benchmark + dyBenchdyDate + fieldKeys?.find(el => el.value === selectVal)?.value;
+        let plusTime = benchmark + fieldKeys?.find(el => el.value === selectVal)?.value;
         return {
           myDate: plusTime,
         };
       });
-      console.log('fotcastTime: ', forcastTime);
+      // console.log('fotcastTime: ', forcastTime);
       const indexMeasure = measure.map((elem: any, i: any) => [i, elem]);
-      console.log('indexMeasure: ', indexMeasure);
+      // console.log('indexMeasure: ', indexMeasure);
       const forecastResult = forcastTime.map((elem: { myDate: Date }, i: number) => {
         // console.log(elem.valueOf());
         const { myDate } = elem;
@@ -120,18 +134,19 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         date: new Date(timeseries[timeseries.length - 1]),
         volume: measure[measure.length - 1],
       });
-      console.log('currenHistory: ', currentHistory);
-      console.log('attachedForecastResult: ', attachedForecastResult);
+      // console.log('currenHistory: ', currentHistory);
+      // console.log('attachedForecastResult: ', attachedForecastResult);
 
       // 화면 지우기
       // const svg = d3.select('svg');
       // svg.selectAll('svg > *').remove();
-      d3.selectAll('svg > g > *').remove();
+      // d3.selectAll('svg > g > *').remove();
+      d3.selectAll('svg > *').remove();
 
       const chart = d3.select('#chart');
       const margin = { top: 20, right: 20, bottom: 30, left: 70 };
       const widthIn = width - margin.left - margin.right;
-      const heightIn = height - margin.top - margin.bottom;
+      const heightIn = height - margin.top - margin.bottom - 30;
       const innerChart = chart.append('g').attr('transform', `translate(${margin.left} ${margin.top})`);
 
       const x = d3.scaleTime().rangeRound([0, widthIn]);
@@ -146,13 +161,18 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         d3.min<MyPropsType>(currentHistory, d => d.date),
         d3.max<MyPropsType>(attachedForecastResult, d => d.date),
       ]);
-      y.domain([0, d3.max<MyPropsType>(currentHistory, d => d.volume)]);
+      y.domain([
+        d3.min<MyPropsType>(currentHistory, d => d.volume),
+        d3.max<MyPropsType>(currentHistory, d => d.volume),
+      ]);
 
+      // x 측 그려줌
       innerChart
         .append('g')
         .attr('transform', `translate(0 ${heightIn})`)
         .call(d3.axisBottom(x));
 
+      // y측 그려줌
       innerChart
         .append('g')
         .call(d3.axisLeft(y))
@@ -162,7 +182,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         .attr('y', 6)
         .attr('dy', '0.71em')
         .attr('text-anchor', 'end')
-        .text('측정 전력');
+        .text('측정값');
 
       innerChart
         .append('path')
@@ -198,12 +218,12 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         `
       )}
     >
-      <h3>{'예상할 시간을 선택하세요(예-10분 예측)'}</h3>
+      <h3>{'예측할 시간 간격을 선택하세요'}</h3>
       <Select
         // value={fieldKeys}
         // options={myOptions}
         options={fieldKeys}
-        placeholder="예상 시간 선택"
+        placeholder="예측 시간 선택" // Select How much time you want to forcast
         onChange={item => onInput(item.value)}
       />
       <svg id="chart" width={width} height={height} viewBox={`-${1} -${1} ${width} ${height}`} ref={d3Container}>
