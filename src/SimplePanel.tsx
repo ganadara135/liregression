@@ -29,7 +29,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
   const styles = getStyles();
   const d3Container = useRef(null);
 
-  const [selectVal, setSelectVal] = useState<number>();
+  const [selectVal, setSelectVal] = useState<number>(60000);
   const [fieldKeys, setFieldKeys] = useState<Array<SelectableValue<number>>>();
 
   useEffect(() => {
@@ -53,33 +53,22 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         value: 3600000,
       },
     ]);
-    console.log(selectVal);
+  }, []); // only call this initially, one time.
 
-    if (d3Container.current && data.series[0]?.fields[0].values.length > 0) {
-      // console.log('data field[0].name: ', data.series[0]?.fields[0].name);
-      // console.log('data field[1].name: ', data.series[0]?.fields[1].name);
-      // console.log('data field[0].values.length: ', data.series[0]?.fields[0].values.length);
-      // console.log('data field[1].values.length: ', data.series[0]?.fields[1].values.length);
-      // console.log('data field[0].values: ', data.series[0]?.fields[0].values);
-      // const arr = data.series[0]?.fields[0].values;
-      // console.log('arr : ', arr);
-      // // console.log('arr.get(0) : ', arr.get(0));
-      // if (arr.length === 0) {
-      //   console.log('arr.length === 0');
-      //   return;
-      // }
+  useEffect(() => {
+    console.log('selectVal : ', selectVal);
+
+    // if (d3Container.current && data.series[0]?.fields[0].values.length > 0) {
+    if (d3Container.current && timeseries.length > 0) {
       const arr = data.series[0];
       console.log('arr : ', arr);
       console.log('options: ', options);
       console.log('data: ', data);
-      // $__interval;
-      // $timeFilter;
-      // interval;
-      // // IntervalValues =
-      // console.log("IntervalValues: ", IntervalValues)
 
-      setTimeseries(data.series[0]?.fields[0].values.toArray());
-      setMeasure(data.series[0]?.fields[1].values.toArray());
+      console.log('toArray(): ', data.series[0]?.fields[0].values.toArray());
+
+      // setTimeseries(data.series[0]?.fields[0].values.toArray());
+      // setMeasure(data.series[0]?.fields[1].values.toArray());
 
       // const history = arr.fields. .map((d: any) => {
       const history = timeseries.map((unix: any) => {
@@ -109,7 +98,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         // // console.log("dyBenchdyDate: ", dyBenchdyDate)
         // console.log('차이값: ', dyBenchdyDate);
         // // let plusTime = benchmark + dyBenchdyDate + 60000;
-        // console.log('체크: ', fieldKeys?.find(el => el.value === selectVal)?.value);
+        console.log('체크: ', fieldKeys?.find(el => el.value === selectVal)?.value);
         // let plusTime = benchmark + dyBenchdyDate + fieldKeys?.find(el => el.value === selectVal)?.value;
         let plusTime = benchmark + fieldKeys?.find(el => el.value === selectVal)?.value;
         return {
@@ -129,13 +118,14 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         };
       });
 
-      // console.log('result : ', forecastResult.volume);
+      console.log('timeseries : ', timeseries);
+      console.log('forecastResult : ', forecastResult);
       const attachedForecastResult = forecastResult.concat({
         date: new Date(timeseries[timeseries.length - 1]),
         volume: measure[measure.length - 1],
       });
       // console.log('currenHistory: ', currentHistory);
-      // console.log('attachedForecastResult: ', attachedForecastResult);
+      console.log('attachedForecastResult: ', attachedForecastResult);
 
       // 화면 지우기
       // const svg = d3.select('svg');
@@ -192,6 +182,8 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         .attr('stroke-width', 4.5)
         .attr('d', line);
 
+      // if ( attachedForecastResult.length > 0)
+      console.log(' attachedForecastResult :  디폴트로 뜰때 에러 잡기 ');
       innerChart
         .append('path')
         .datum(attachedForecastResult)
@@ -201,11 +193,14 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         .attr('stroke-width', 5.5)
         .attr('d', line);
     }
-  }, [width, height, data, selectVal]);
+  }, [width, height, selectVal]);
 
   const onInput = (val: any) => {
     console.log('target value index : ', val);
     setSelectVal(val);
+
+    setTimeseries(data.series[0]?.fields[0].values.toArray());
+    setMeasure(data.series[0]?.fields[1].values.toArray());
   };
 
   return (
