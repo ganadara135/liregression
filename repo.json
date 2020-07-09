@@ -1,0 +1,12 @@
+{
+    "id": "kcod-liregression",
+    "type": "panel",
+    "url": "https://github.com/ganadara135/liregression",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "commit": "18dbf0a90c5248b266bda2ca00ea748dff087103",
+        "url": "https://github.com/ganadara135/liregression"
+      }
+    ]
+  }
