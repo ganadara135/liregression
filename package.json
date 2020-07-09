@@ -12,8 +12,8 @@
   "author": "ganadara135",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/grafana/simple-react-panel/issues",
-    "email": "plugins@grafana.com"
+    "url": "https://github.com/ganadara135/liregression/issues",
+    "email": "ganadara135@gmail.com"
   },
   "devDependencies": {
     "@grafana/data": "7.0.0",
