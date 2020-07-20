@@ -505,14 +505,22 @@ var MyPanel = function MyPanel(_a) {
         return y_1(d.volume);
       });
       x_1.domain([d3__WEBPACK_IMPORTED_MODULE_4__["min"](currentHistory, function (d) {
-        return d.date;
+        var _a;
+
+        return (_a = d) === null || _a === void 0 ? void 0 : _a.date;
       }), d3__WEBPACK_IMPORTED_MODULE_4__["max"](attachedForecastResult, function (d) {
-        return d.date;
+        var _a;
+
+        return (_a = d) === null || _a === void 0 ? void 0 : _a.date;
       })]);
       y_1.domain([d3__WEBPACK_IMPORTED_MODULE_4__["min"](currentHistory, function (d) {
-        return d.volume;
+        var _a;
+
+        return (_a = d) === null || _a === void 0 ? void 0 : _a.volume;
       }), d3__WEBPACK_IMPORTED_MODULE_4__["max"](currentHistory, function (d) {
-        return d.volume;
+        var _a;
+
+        return (_a = d) === null || _a === void 0 ? void 0 : _a.volume;
       })]); // x 측 그려줌
 
       innerChart.append('g').attr('transform', "translate(0 " + heightIn + ")").call(d3__WEBPACK_IMPORTED_MODULE_4__["axisBottom"](x_1)); // y측 그려줌

@@ -25,7 +25,6 @@
     "node": ">=12 <13"
   },
   "dependencies": {
-    "@types/d3": "^5.7.2",
-    "@types/d3-array": "file:MyModule/d3-array"
+    "@types/d3": "^5.7.2"
   }
 }

@@ -56,3 +56,12 @@ export function max<T>(array: ArrayLike<T>, accessor: (datum: T, index: number, 
  * Return the minimum value in the array using natural order.
  */
 export function min<T>(array: ArrayLike<T>, accessor: (datum: T, index: number, array: ArrayLike<T>) => any | string | undefined | null): any | string | undefined;
+
+
+  "dependencies": {
+    "@types/d3": "^5.7.2",
+    "@types/d3-array": "file:MyModule/d3-array"
+  },
+  "resolutions": {
+    "@types/d3-array": "1.2.7"
+  }

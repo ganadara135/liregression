@@ -17,8 +17,8 @@ export interface SelectableValue<T = any> {
 }
 
 interface MyPropsType {
-  date?: Date;
-  volume?: number;
+  date?: Date | undefined;
+  volume?: number | undefined;
 }
 
 interface Props extends PanelProps<MyPanelOptions> {}
@@ -140,16 +140,16 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
 
       const line = d3
         .line<MyPropsType>()
-        .x(d => x(d.date as Date))
-        .y(d => y(d.volume as number));
+        .x(d => x(d.date as any ))
+        .y(d => y(d.volume as any));
 
       x.domain([
-        d3.min<MyPropsType>(currentHistory, d => d.date),
-        d3.max<MyPropsType>(attachedForecastResult, d => d.date),
+        d3.min<MyPropsType>(currentHistory, d => d?.date as any),
+        d3.max<MyPropsType>(attachedForecastResult, d => d?.date as any),
       ]);
       y.domain([
-        d3.min<MyPropsType>(currentHistory, d => d.volume),
-        d3.max<MyPropsType>(currentHistory, d => d.volume),
+        d3.min<MyPropsType>(currentHistory, d => d?.volume as any),
+        d3.max<MyPropsType>(currentHistory, d => d?.volume as any),
       ]);
 
       // x 측 그려줌
