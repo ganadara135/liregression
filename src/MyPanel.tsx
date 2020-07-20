@@ -144,12 +144,12 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
         .y(d => y(d?.volume as any));
 
       x.domain([
-        d3.min<MyPropsType>(currentHistory, d => d?.date as any),
-        d3.max<MyPropsType>(attachedForecastResult, d => d?.date as any),
+        d3.min<MyPropsType>(currentHistory, d => d.date !== undefined ? d?.date as any : null),
+        d3.max<MyPropsType>(attachedForecastResult, d => d.date !== undefined ? d?.date as any : null),
       ]);
       y.domain([
-        d3.min<MyPropsType>(currentHistory, d => d?.volume as any),
-        d3.max<MyPropsType>(currentHistory, d => d?.volume as any),
+        d3.min<MyPropsType>(currentHistory, d => d.volume !== undefined ? d?.volume as any : 0),
+        d3.max<MyPropsType>(currentHistory, d => d.volume !== undefined ? d?.volume as any : 0),
       ]);
 
       // x 측 그려줌
