@@ -3,6 +3,7 @@ import { PanelProps } from '@grafana/data';
 import { SimpleOptions } from 'types';
 import { css, cx } from 'emotion';
 import { stylesFactory } from '@grafana/ui';
+import { useTheme } from '@grafana/ui';
 
 import * as d3 from 'd3';
 import { Select } from '@grafana/ui';
@@ -23,7 +24,9 @@ interface MyPropsType {
 interface Props extends PanelProps<SimpleOptions> {}
 
 export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) => {
-  // const theme = useTheme();
+  const theme = useTheme();
+  console.log(theme.palette.blue77);
+
   const [timeseries, setTimeseries] = useState([] as any);
   const [measure, setMeasure] = useState([] as any);
   const styles = getStyles();
