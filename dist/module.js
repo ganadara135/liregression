@@ -483,10 +483,11 @@ var MyPanel = function MyPanel(_a) {
       // const svg = d3.select('svg');
       // svg.selectAll('svg > *').remove();
       // d3.selectAll('svg > g > *').remove();
-      // d3.selectAll('svg > *').remove();
+      // d3.selectAll('svg > *').remove();    // 이것으로 화면 전체 grafana 의 svg 로 그려진 이미지 삭제함
 
       var chart = d3__WEBPACK_IMPORTED_MODULE_4__["select"]('#mychart');
-      chart.select('svg > *').remove();
+      chart.select('svg > *').remove(); // 현재 선택된 캔버스에서의 svg 만 제거
+
       var margin = {
         top: 20,
         right: 5,
@@ -516,7 +517,7 @@ var MyPanel = function MyPanel(_a) {
 
       innerChart.append('g').attr('transform', "translate(0 " + heightIn + ")").call(d3__WEBPACK_IMPORTED_MODULE_4__["axisBottom"](x_1)); // y측 그려줌
 
-      innerChart.append('g').call(d3__WEBPACK_IMPORTED_MODULE_4__["axisLeft"](y_1)).append('text').attr('fill', '#fff').attr('transform', 'rotate(-90)').attr('y', 6).attr('dy', '0.71em').attr('text-anchor', 'end').text('측정값');
+      innerChart.append('g').call(d3__WEBPACK_IMPORTED_MODULE_4__["axisLeft"](y_1)).append('text').attr('fill', '#fff').attr('transform', 'rotate(-90)').attr('y', 6).attr('dy', '0.71em').attr('text-anchor', 'end').text('Target Value');
       innerChart.append('path').datum(currentHistory).attr('fill', 'none').attr('stroke', 'steelblue').attr('stroke-width', 4.5).attr('d', line);
       innerChart.append('path').datum(attachedForecastResult).attr('fill', 'none').attr('stroke', 'tomato').attr('stroke-dasharray', '10,7').attr('stroke-width', 5.5).attr('d', line);
     }
@@ -532,10 +533,18 @@ var MyPanel = function MyPanel(_a) {
   };
 
   console.log('width : ', width);
-  console.log('height : ', height);
-  var clazz = Object(emotion__WEBPACK_IMPORTED_MODULE_2__["css"])(templateObject_1 || (templateObject_1 = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__makeTemplateObject"])(["\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column;\n    background-color: yellow;\n    text-align: center;\n  "], ["\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column;\n    background-color: yellow;\n    text-align: center;\n  "])));
+  console.log('height : ', height); // const clazz = css`
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   flex-direction: column;
+  //   background-color: yellow;
+  //   text-align: left;
+  // `;
+
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: clazz
+    // className={clazz}
+    className: Object(emotion__WEBPACK_IMPORTED_MODULE_2__["cx"])(styles.wrapper, Object(emotion__WEBPACK_IMPORTED_MODULE_2__["css"])(templateObject_1 || (templateObject_1 = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__makeTemplateObject"])(["\n          width: ", "px;\n          height: ", "px;\n        "], ["\n          width: ", "px;\n          height: ", "px;\n        "])), width, height))
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, 'Select time interval what you want'), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_3__["Select"] // value={fieldKeys}
   // options={myOptions}
   , {

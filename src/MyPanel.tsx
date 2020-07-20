@@ -3,7 +3,7 @@ import { PanelProps } from '@grafana/data';
 import { MyPanelOptions } from 'types';
 import {
   css,
-  // cx
+  cx
 } from 'emotion';
 import { stylesFactory } from '@grafana/ui';
 // import { useTheme } from '@grafana/ui';
@@ -129,11 +129,11 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
       // const svg = d3.select('svg');
       // svg.selectAll('svg > *').remove();
       // d3.selectAll('svg > g > *').remove();
-      // d3.selectAll('svg > *').remove();
+      // d3.selectAll('svg > *').remove();    // 이것으로 화면 전체 grafana 의 svg 로 그려진 이미지 삭제함
       
 
       const chart = d3.select('#mychart');
-      chart.select('svg > *').remove();
+      chart.select('svg > *').remove();     // 현재 선택된 캔버스에서의 svg 만 제거
       const margin = { top: 20, right: 5, bottom: 10, left: 5 };
       const widthIn = width - margin.left - margin.right;
       const heightIn = height - margin.top - margin.bottom;
@@ -172,7 +172,7 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
         .attr('y', 6)
         .attr('dy', '0.71em')
         .attr('text-anchor', 'end')
-        .text('측정값');
+        .text('Target Value');
 
       innerChart
         .append('path')
@@ -204,25 +204,25 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
   console.log('width : ', width);
   console.log('height : ', height);
 
-  const clazz = css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: yellow;
-    text-align: center;
-  `;
+  // const clazz = css`
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   flex-direction: column;
+  //   background-color: yellow;
+  //   text-align: left;
+  // `;
 
   return (
     <div
-      className={clazz}
-      // className={cx(
-      //   styles.wrapper,
-      //   css`
-      //     width: ${width}px;
-      //     height: ${height}px;
-      //   `
-      // )}
+      // className={clazz}
+      className={cx(
+        styles.wrapper,
+        css`
+          width: ${width}px;
+          height: ${height}px;
+        `
+      )}
     >
       <h3>{'Select time interval what you want'}</h3>
       <Select
