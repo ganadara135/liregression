@@ -500,9 +500,13 @@ var MyPanel = function MyPanel(_a) {
       var x_1 = d3__WEBPACK_IMPORTED_MODULE_4__["scaleTime"]().rangeRound([0, widthIn]);
       var y_1 = d3__WEBPACK_IMPORTED_MODULE_4__["scaleLinear"]().rangeRound([heightIn, 0]);
       var line = d3__WEBPACK_IMPORTED_MODULE_4__["line"]().x(function (d) {
-        return x_1(d.date);
+        var _a;
+
+        return x_1((_a = d) === null || _a === void 0 ? void 0 : _a.date);
       }).y(function (d) {
-        return y_1(d.volume);
+        var _a;
+
+        return y_1((_a = d) === null || _a === void 0 ? void 0 : _a.volume);
       });
       x_1.domain([d3__WEBPACK_IMPORTED_MODULE_4__["min"](currentHistory, function (d) {
         var _a;

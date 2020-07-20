@@ -140,8 +140,8 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
 
       const line = d3
         .line<MyPropsType>()
-        .x(d => x(d.date as any))
-        .y(d => y(d.volume as any));
+        .x(d => x(d?.date as any))
+        .y(d => y(d?.volume as any));
 
       x.domain([
         d3.min<MyPropsType>(currentHistory, d => d?.date as any),
