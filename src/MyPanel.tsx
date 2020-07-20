@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { PanelProps } from '@grafana/data';
 import { MyPanelOptions } from 'types';
-import {
-  css,
-  cx
-} from 'emotion';
+import { css, cx } from 'emotion';
 import { stylesFactory } from '@grafana/ui';
 // import { useTheme } from '@grafana/ui';
 
@@ -130,10 +127,9 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
       // svg.selectAll('svg > *').remove();
       // d3.selectAll('svg > g > *').remove();
       // d3.selectAll('svg > *').remove();    // 이것으로 화면 전체 grafana 의 svg 로 그려진 이미지 삭제함
-      
 
       const chart = d3.select('#mychart');
-      chart.select('svg > *').remove();     // 현재 선택된 캔버스에서의 svg 만 제거
+      chart.select('svg > *').remove(); // 현재 선택된 캔버스에서의 svg 만 제거
       const margin = { top: 20, right: 5, bottom: 10, left: 5 };
       const widthIn = width - margin.left - margin.right;
       const heightIn = height - margin.top - margin.bottom;
@@ -232,7 +228,13 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
         placeholder="Select time interval to forcast" // Select How much time you want to forcast
         onChange={item => onInput(item.value)}
       />
-      <svg id="mychart" width={width} height={height-57} viewBox={`-${1} -${1} ${width} ${height+10}`} ref={d3Container}>
+      <svg
+        id="mychart"
+        width={width}
+        height={height - 57}
+        viewBox={`-${1} -${1} ${width} ${height + 10}`}
+        ref={d3Container}
+      >
         <g fill={'red'}></g>
       </svg>
     </div>
