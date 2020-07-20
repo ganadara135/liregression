@@ -6,8 +6,8 @@ This panel draw forcaset result of selected target data by linear regression.
 # Main Issues
 1. @types/d3  doesn't support enough type to use d3's library on Grafana
 1. so I change some type as any type 
-  > where :  @type/d3 -> d3-array -> index.d.ts
-  > how   :  insert 'any type' in max interface 
+  > where :  @type/d3 -> d3-array -> index.d.ts <br>
+  > how   :  insert 'any type' in max interface <br>
 
 
 # Development
