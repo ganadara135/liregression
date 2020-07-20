@@ -140,16 +140,16 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
 
       const line = d3
         .line<MyPropsType>()
-        .x(d => x(d?.date as any))
-        .y(d => y(d?.volume as any));
+        .x(d => x(d?.date as Date))
+        .y(d => y(d?.volume as number));
 
       x.domain([
-        d3.min<MyPropsType>(currentHistory, d => d.date),
-        d3.max<MyPropsType>(attachedForecastResult, d => d.date),
+        d3.min<MyPropsType>(currentHistory, d => d.date as Date),
+        d3.max<MyPropsType>(attachedForecastResult, d => d.date as Date),
       ]);
       y.domain([
-        d3.min<MyPropsType>(currentHistory, d => d.volume),
-        d3.max<MyPropsType>(currentHistory, d => d.volume),
+        d3.min<MyPropsType>(currentHistory, d => d.volume as number),
+        d3.max<MyPropsType>(currentHistory, d => d.volume as number),
       ]);
 
       // x.domain([
