@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { PanelProps } from '@grafana/data';
-import { SimpleOptions } from 'types';
-import { css, cx } from 'emotion';
+import { MyPanelOptions } from 'types';
+import {
+  css,
+  // cx
+} from 'emotion';
 import { stylesFactory } from '@grafana/ui';
-import { useTheme } from '@grafana/ui';
+// import { useTheme } from '@grafana/ui';
 
 import * as d3 from 'd3';
 import { Select } from '@grafana/ui';
@@ -21,15 +24,16 @@ interface MyPropsType {
   volume?: number;
 }
 
-interface Props extends PanelProps<SimpleOptions> {}
+interface Props extends PanelProps<MyPanelOptions> {}
 
-export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) => {
-  const theme = useTheme();
-  console.log(theme.palette.blue77);
+export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
+  // const theme = useTheme();
+  // console.log(theme.palette.blue77);
 
   const [timeseries, setTimeseries] = useState([] as any);
   const [measure, setMeasure] = useState([] as any);
   const styles = getStyles();
+  console.log(styles);
   const d3Container = useRef(null);
 
   const [selectVal, setSelectVal] = useState<number>(60000);
@@ -41,17 +45,17 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
     // 10 munites equals 600 seconds
     setFieldKeys([
       {
-        label: '1분',
+        label: '1 minute',
         description: 'Forcast 1 minutes',
         value: 60000,
       },
       {
-        label: '10분',
+        label: '10 minutes',
         description: 'Forcast 10 minutes',
         value: 600000,
       },
       {
-        label: '60분',
+        label: '60 minutes',
         description: 'Forcast 60 minutes',
         value: 3600000,
       },
@@ -60,20 +64,12 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
 
   useEffect(() => {
     console.log('selectVal : ', selectVal);
+    console.log('timeseries?.length: ', timeseries?.length);
 
-    // if (d3Container.current && data.series[0]?.fields[0].values.length > 0) {
-    if (d3Container.current && timeseries.length > 0) {
-      // const arr = data.series[0];
-      // console.log('arr : ', arr);
+    if (d3Container.current && timeseries?.length > 0) {
       // console.log('options: ', options);
       // console.log('data: ', data);
-
       // console.log('toArray(): ', data.series[0]?.fields[0].values.toArray());
-
-      // setTimeseries(data.series[0]?.fields[0].values.toArray());
-      // setMeasure(data.series[0]?.fields[1].values.toArray());
-
-      // const history = arr.fields. .map((d: any) => {
       const history = timeseries.map((unix: any) => {
         return {
           date: unix,
@@ -87,7 +83,6 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         };
       });
 
-      // console.log(timeseries, measure);
       let forcastTime = timeseries.map((unix: any) => {
         // let dyDate = new Date(unix);
         // let plusTime = dyDate.valueOf() + 600000; // 1분 플러스
@@ -134,12 +129,14 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
       // const svg = d3.select('svg');
       // svg.selectAll('svg > *').remove();
       // d3.selectAll('svg > g > *').remove();
-      d3.selectAll('svg > *').remove();
+      // d3.selectAll('svg > *').remove();
+      
 
-      const chart = d3.select('#chart');
-      const margin = { top: 20, right: 20, bottom: 30, left: 70 };
+      const chart = d3.select('#mychart');
+      chart.select('svg > *').remove();
+      const margin = { top: 20, right: 5, bottom: 10, left: 5 };
       const widthIn = width - margin.left - margin.right;
-      const heightIn = height - margin.top - margin.bottom - 30;
+      const heightIn = height - margin.top - margin.bottom;
       const innerChart = chart.append('g').attr('transform', `translate(${margin.left} ${margin.top})`);
 
       const x = d3.scaleTime().rangeRound([0, widthIn]);
@@ -185,8 +182,6 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         .attr('stroke-width', 4.5)
         .attr('d', line);
 
-      // if ( attachedForecastResult.length > 0)
-      // console.log(' attachedForecastResult :  디폴트로 뜰때 에러 잡기 ');
       innerChart
         .append('path')
         .datum(attachedForecastResult)
@@ -206,26 +201,39 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
     setMeasure(data.series[0]?.fields[1].values.toArray());
   };
 
+  console.log('width : ', width);
+  console.log('height : ', height);
+
+  const clazz = css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: yellow;
+    text-align: center;
+  `;
+
   return (
     <div
-      className={cx(
-        styles.wrapper,
-        css`
-          width: ${width}px;
-          height: ${height}px;
-        `
-      )}
+      className={clazz}
+      // className={cx(
+      //   styles.wrapper,
+      //   css`
+      //     width: ${width}px;
+      //     height: ${height}px;
+      //   `
+      // )}
     >
-      <h3>{'예측할 시간 간격을 선택하세요'}</h3>
+      <h3>{'Select time interval what you want'}</h3>
       <Select
         // value={fieldKeys}
         // options={myOptions}
         options={fieldKeys}
-        placeholder="예측 시간 선택" // Select How much time you want to forcast
+        placeholder="Select time interval to forcast" // Select How much time you want to forcast
         onChange={item => onInput(item.value)}
       />
-      <svg id="chart" width={width} height={height} viewBox={`-${1} -${1} ${width} ${height}`} ref={d3Container}>
-        <g></g>
+      <svg id="mychart" width={width} height={height-57} viewBox={`-${1} -${1} ${width} ${height+10}`} ref={d3Container}>
+        <g fill={'red'}></g>
       </svg>
     </div>
   );

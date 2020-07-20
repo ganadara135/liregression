@@ -1,5 +1,5 @@
 {
-  "name": "kcod-liregression",
+  "name": "ganadara135-liregression",
   "version": "1.0.0",
   "description": "Linear Regression for a time an attribute",
   "scripts": {
@@ -8,7 +8,7 @@
     "dev": "grafana-toolkit plugin:dev",
     "watch": "grafana-toolkit plugin:dev --watch"
   },
-  "repository": "github:grafana/simple-react-panel",
+  "repository": "github:grafana/liregression",
   "author": "ganadara135",
   "license": "Apache-2.0",
   "bugs": {

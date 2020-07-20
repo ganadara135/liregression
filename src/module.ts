@@ -1,8 +1,8 @@
 import { PanelPlugin } from '@grafana/data';
-import { SimpleOptions } from './types';
-import { SimplePanel } from './SimplePanel';
+import { MyPanelOptions } from './types';
+import { MyPanel } from './MyPanel';
 
-export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOptions(builder => {
+export const plugin = new PanelPlugin<MyPanelOptions>(MyPanel).setPanelOptions(builder => {
   return builder
     .addTextInput({
       path: 'text',

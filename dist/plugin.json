@@ -1,9 +1,12 @@
 {
   "type": "panel",
   "name": "liregression",
-  "id": "kcod-liregression",
+  "id": "ganadara135-liregression",
+
+  "skipDataQuery": false,
+
   "info": {
-    "description": "Linear Regression for a time an attribute",
+    "description": "Linear Regression a time an attribute",
     "author": {
       "name": "ganadara135",
       "url": "github.com/ganadara135"
@@ -18,19 +21,25 @@
     "links": [
       {
         "name": "Website",
-        "url": "https://github.com/grafana/simple-react-panel"
+        "url": "https://github.com/grafana/liregression"
       },
       {
         "name": "License",
-        "url": "https://github.com/grafana/simple-react-panel/blob/master/LICENSE"
+        "url": "https://github.com/grafana/liregression/LICENSE"
       }
     ],
-    "screenshots": [],
+    "screenshots": [
+      { "name": "Donut!", "path": "img/piechart-donut.png" },
+      { "name": "Legend on the graph", "path": "img/piechart-legend-on-graph.png" },
+      { "name": "Legend to the right", "path": "img/piechart-legend-rhs.png" },
+      { "name": "Legend underneath", "path": "img/piechart-legend-under.png" },
+      { "name": "Piechart options", "path": "img/piechart-options.png" }
+    ],
     "version": "1.0.0",
-    "updated": "2020-07-09"
+    "updated": "2020-07-20"
   },
   "dependencies": {
-    "grafanaVersion": "6.3.x",
+    "grafanaVersion": "7.0.0",
     "plugins": []
   }
 }
