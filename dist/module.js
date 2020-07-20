@@ -509,23 +509,23 @@ var MyPanel = function MyPanel(_a) {
         return y_1((_a = d) === null || _a === void 0 ? void 0 : _a.volume);
       });
       x_1.domain([d3__WEBPACK_IMPORTED_MODULE_4__["min"](currentHistory, function (d) {
-        var _a;
-
-        return d.date !== undefined ? (_a = d) === null || _a === void 0 ? void 0 : _a.date : null;
+        return d.date;
       }), d3__WEBPACK_IMPORTED_MODULE_4__["max"](attachedForecastResult, function (d) {
-        var _a;
-
-        return d.date !== undefined ? (_a = d) === null || _a === void 0 ? void 0 : _a.date : null;
+        return d.date;
       })]);
       y_1.domain([d3__WEBPACK_IMPORTED_MODULE_4__["min"](currentHistory, function (d) {
-        var _a;
-
-        return d.volume !== undefined ? (_a = d) === null || _a === void 0 ? void 0 : _a.volume : 0;
+        return d.volume;
       }), d3__WEBPACK_IMPORTED_MODULE_4__["max"](currentHistory, function (d) {
-        var _a;
-
-        return d.volume !== undefined ? (_a = d) === null || _a === void 0 ? void 0 : _a.volume : 0;
-      })]); // x 측 그려줌
+        return d.volume;
+      })]); // x.domain([
+      //   d3.min<MyPropsType>(currentHistory, d => (d.date !== undefined ? (d?.date as any) : null)),
+      //   d3.max<MyPropsType>(attachedForecastResult, d => (d.date !== undefined ? (d?.date as any) : null)),
+      // ]);
+      // y.domain([
+      //   d3.min<MyPropsType>(currentHistory, d => (d.volume !== undefined ? (d?.volume as any) : 0)),
+      //   d3.max<MyPropsType>(currentHistory, d => (d.volume !== undefined ? (d?.volume as any) : 0)),
+      // ]);
+      // x 측 그려줌
 
       innerChart.append('g').attr('transform', "translate(0 " + heightIn + ")").call(d3__WEBPACK_IMPORTED_MODULE_4__["axisBottom"](x_1)); // y측 그려줌
 
