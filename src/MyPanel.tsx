@@ -17,8 +17,8 @@ export interface SelectableValue<T = any> {
 }
 
 interface MyPropsType {
-  date?: Date | undefined;
-  volume?: number | undefined;
+  date?: Date;
+  volume?: number;
 }
 
 interface Props extends PanelProps<MyPanelOptions> {}
