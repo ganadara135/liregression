@@ -8,7 +8,10 @@ This panel draw forcaset result of selected target data by linear regression.
 1. so I change some type as any type 
   > where :  @type/d3 -> d3-array -> index.d.ts <br>
   > how   :  insert 'any type' in max interface <br>
-
+1. In the end, adove one is not able to pass CircleCI pipline test
+1. So I changed my code as any type to pass it
+1. CircleCI reinstalls all dependencies and test your code with strong prettier and lint rules
+1. I recommend you to check your code in CircleCI when you do pull request to grafana plugin repository.
 
 # Development
 
@@ -45,23 +48,18 @@ https://grafana.com/tutorials/build-a-panel-plugin-with-d3/#8
 
 
 
+### individual part
 d3-array -> index.d.ts 관련부분
-/**
- * Return the maximum value in the array using natural order and a projection function to map values to strings.
- */
+
 export function max<T>(array: ArrayLike<T>, accessor: (datum: T, index: number, array: ArrayLike<T>) => any | string | undefined | null): any | string | undefined;
-
-
-/**
- * Return the minimum value in the array using natural order.
- */
 export function min<T>(array: ArrayLike<T>, accessor: (datum: T, index: number, array: ArrayLike<T>) => any | string | undefined | null): any | string | undefined;
 
+package.json 부분
 
-  "dependencies": {
+"dependencies": {
     "@types/d3": "^5.7.2",
     "@types/d3-array": "file:MyModule/d3-array"
-  },
-  "resolutions": {
+},
+"resolutions": {
     "@types/d3-array": "1.2.7"
-  }
+}
