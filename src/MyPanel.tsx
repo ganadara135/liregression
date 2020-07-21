@@ -90,7 +90,7 @@ export const MyPanel: React.FC<Props> = ({ data, width, height }) => {
           myDate: plusTime,
         };
       });
-      
+
       const indexMeasure = measure.map((elem: any, i: any) => [i, elem]);
       const forecastResult = forcastTime.map((elem: { myDate: Date }, i: number) => {
         const { myDate } = elem;
@@ -128,16 +128,16 @@ export const MyPanel: React.FC<Props> = ({ data, width, height }) => {
         // .y(d => y(d?.volume!));
         .x(d => x(d?.date as Date))
         .y(d => y(d?.volume as number));
-        // const line = d3
-        //   .line<MyPropsType>()
-        //   .x(d => {
-        //         console.log(d.date?.valueOf());
-        //         return x(d.date?.valueOf() as number);
-        //     })
-        //   .y(d => {
-        //       console.log(d.volume?.valueOf());
-        //       return y(d.volume?.valueOf() as number);
-        //     });
+      // const line = d3
+      //   .line<MyPropsType>()
+      //   .x(d => {
+      //       console.log(d.date?.valueOf());
+      //       return x(d.date?.valueOf() as number);
+      //   })
+      // .y(d => {
+      //     console.log(d.volume?.valueOf());
+      //     return y(d.volume?.valueOf() as number);
+      //   });
 
       x.domain([
         // 디버그 방법

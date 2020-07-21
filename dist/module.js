@@ -493,13 +493,13 @@ var MyPanel = function MyPanel(_a) {
       }); // const line = d3
       //   .line<MyPropsType>()
       //   .x(d => {
-      //         console.log(d.date?.valueOf());
-      //         return x(d.date?.valueOf() as number);
-      //     })
-      //   .y(d => {
-      //       console.log(d.volume?.valueOf());
-      //       return y(d.volume?.valueOf() as number);
-      //     });
+      //       console.log(d.date?.valueOf());
+      //       return x(d.date?.valueOf() as number);
+      //   })
+      // .y(d => {
+      //     console.log(d.volume?.valueOf());
+      //     return y(d.volume?.valueOf() as number);
+      //   });
 
       x_1.domain([// 디버그 방법
       // d3.min<MyPropsType>(currentHistory, (dtm: MyPropsType,idx: any,arr: any) => { console.log("d3.min: ", dtm); return null; }),
