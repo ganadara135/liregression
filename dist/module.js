@@ -369,8 +369,7 @@ __webpack_require__.r(__webpack_exports__);
 var MyPanel = function MyPanel(_a) {
   // const theme = useTheme();
   // console.log(theme.palette.blue77);
-  var options = _a.options,
-      data = _a.data,
+  var data = _a.data,
       width = _a.width,
       height = _a.height;
 
@@ -414,15 +413,11 @@ var MyPanel = function MyPanel(_a) {
   }, []); // only call this initially, one time.
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
-    var _a, _b;
+    // console.log('selectVal : ', selectVal);
+    // console.log('timeseries?.length: ', timeseries?.length);
+    var _a;
 
-    console.log('selectVal : ', selectVal);
-    console.log('timeseries?.length: ', (_a = timeseries) === null || _a === void 0 ? void 0 : _a.length);
-
-    if (d3Container.current && ((_b = timeseries) === null || _b === void 0 ? void 0 : _b.length) > 0) {
-      // console.log('options: ', options);
-      // console.log('data: ', data);
-      // console.log('toArray(): ', data.series[0]?.fields[0].values.toArray());
+    if (d3Container.current && ((_a = timeseries) === null || _a === void 0 ? void 0 : _a.length) > 0) {
       var history_1 = timeseries.map(function (unix) {
         return {
           date: unix
@@ -434,21 +429,14 @@ var MyPanel = function MyPanel(_a) {
           volume: mea
         };
       });
-      var forcastTime = timeseries.map(function (unix) {
+      var forcastTime = timeseries.map(function () {
         var _a, _b; // let dyDate = new Date(unix);
         // let plusTime = dyDate.valueOf() + 600000; // 1분 플러스
-        // console.log('getTime(): ', dyDate.getTime());
 
 
         var benchmark = timeseries[timeseries.length - 1]; // 최종 마지막 시간
         // let dyBenchdyDate = benchmark - dyDate.getTime();
-        // // console.log('benchmark: ', benchmark);
-        // console.log('기준시간: : ', new Date(benchmark));
-        // console.log('dyDate.getTime(): ', dyDate.getTime());
-        // // console.log("dyBenchdyDate: ", dyBenchdyDate)
-        // console.log('차이값: ', dyBenchdyDate);
         // // let plusTime = benchmark + dyBenchdyDate + 60000;
-        // console.log('체크: ', fieldKeys?.find(el => el.value === selectVal)?.value);
         // let plusTime = benchmark + dyBenchdyDate + fieldKeys?.find(el => el.value === selectVal)?.value;
 
         var plusTime = benchmark + ((_b = (_a = fieldKeys) === null || _a === void 0 ? void 0 : _a.find(function (el) {
@@ -457,29 +445,22 @@ var MyPanel = function MyPanel(_a) {
         return {
           myDate: plusTime
         };
-      }); // console.log('fotcastTime: ', forcastTime);
-
+      });
       var indexMeasure_1 = measure.map(function (elem, i) {
         return [i, elem];
-      }); // console.log('indexMeasure: ', indexMeasure);
-
+      });
       var forecastResult = forcastTime.map(function (elem, i) {
-        // console.log(elem.valueOf());
         var myDate = elem.myDate;
         return {
           // date: new Date(elem),
           date: new Date(myDate),
           volume: predict(indexMeasure_1, indexMeasure_1.length - 1 + i)
         };
-      }); // console.log('timeseries : ', timeseries);
-      // console.log('forecastResult : ', forecastResult);
-
+      });
       var attachedForecastResult = forecastResult.concat({
         date: new Date(timeseries[timeseries.length - 1]),
         volume: measure[measure.length - 1]
-      }); // console.log('currenHistory: ', currentHistory);
-      // console.log('attachedForecastResult: ', attachedForecastResult);
-      // 화면 지우기
+      }); // 화면 지우기
       // const svg = d3.select('svg');
       // svg.selectAll('svg > *').remove();
       // d3.selectAll('svg > g > *').remove();
@@ -499,7 +480,9 @@ var MyPanel = function MyPanel(_a) {
       var innerChart = chart.append('g').attr('transform', "translate(" + margin.left + " " + margin.top + ")");
       var x_1 = d3__WEBPACK_IMPORTED_MODULE_4__["scaleTime"]().rangeRound([0, widthIn]);
       var y_1 = d3__WEBPACK_IMPORTED_MODULE_4__["scaleLinear"]().rangeRound([heightIn, 0]);
-      var line = d3__WEBPACK_IMPORTED_MODULE_4__["line"]().x(function (d) {
+      var line = d3__WEBPACK_IMPORTED_MODULE_4__["line"]() // .x(d => x(d?.date!))
+      // .y(d => y(d?.volume!));
+      .x(function (d) {
         var _a;
 
         return x_1((_a = d) === null || _a === void 0 ? void 0 : _a.date);
@@ -507,25 +490,32 @@ var MyPanel = function MyPanel(_a) {
         var _a;
 
         return y_1((_a = d) === null || _a === void 0 ? void 0 : _a.volume);
-      });
-      x_1.domain([d3__WEBPACK_IMPORTED_MODULE_4__["min"](currentHistory, function (d) {
-        return d.date;
-      }), d3__WEBPACK_IMPORTED_MODULE_4__["max"](attachedForecastResult, function (d) {
-        return d.date;
+      }); // const line = d3
+      //   .line<MyPropsType>()
+      //   .x(d => { 
+      //         console.log(d.date?.valueOf()); 
+      //         return x(d.date?.valueOf() as number);
+      //     })
+      //   .y(d => {
+      //       console.log(d.volume?.valueOf());
+      //       return y(d.volume?.valueOf() as number);
+      //     });
+
+      x_1.domain([// 디버그 방법
+      // d3.min<MyPropsType>(currentHistory, (dtm: MyPropsType,idx: any,arr: any) => { console.log("d3.min: ", dtm); return null; }),
+      d3__WEBPACK_IMPORTED_MODULE_4__["min"](currentHistory, function (_a) {
+        var date = _a.date;
+        return date;
+      }), // d3.max<MyPropsType>(attachedForecastResult, (dtm: MyPropsType) => dtm.date?.toISOString()) as any,
+      d3__WEBPACK_IMPORTED_MODULE_4__["max"](attachedForecastResult, function (dtm) {
+        return dtm.date;
       })]);
-      y_1.domain([d3__WEBPACK_IMPORTED_MODULE_4__["min"](currentHistory, function (d) {
-        return d.volume;
-      }), d3__WEBPACK_IMPORTED_MODULE_4__["max"](currentHistory, function (d) {
-        return d.volume;
-      })]); // x.domain([
-      //   d3.min<MyPropsType>(currentHistory, d => (d.date !== undefined ? (d?.date as any) : null)),
-      //   d3.max<MyPropsType>(attachedForecastResult, d => (d.date !== undefined ? (d?.date as any) : null)),
-      // ]);
-      // y.domain([
-      //   d3.min<MyPropsType>(currentHistory, d => (d.volume !== undefined ? (d?.volume as any) : 0)),
-      //   d3.max<MyPropsType>(currentHistory, d => (d.volume !== undefined ? (d?.volume as any) : 0)),
-      // ]);
-      // x 측 그려줌
+      y_1.domain([d3__WEBPACK_IMPORTED_MODULE_4__["min"](currentHistory, function (_a) {
+        var volume = _a.volume;
+        return volume;
+      }), d3__WEBPACK_IMPORTED_MODULE_4__["max"](currentHistory, function (dtm) {
+        return dtm.volume;
+      })]); // x 측 그려줌
 
       innerChart.append('g').attr('transform', "translate(0 " + heightIn + ")").call(d3__WEBPACK_IMPORTED_MODULE_4__["axisBottom"](x_1)); // y측 그려줌
 

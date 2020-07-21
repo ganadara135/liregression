@@ -23,7 +23,7 @@ interface MyPropsType {
 
 interface Props extends PanelProps<MyPanelOptions> {}
 
-export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
+export const MyPanel: React.FC<Props> = ({ data, width, height }) => {
   // const theme = useTheme();
   // console.log(theme.palette.blue77);
 
@@ -60,13 +60,10 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
   }, []); // only call this initially, one time.
 
   useEffect(() => {
-    console.log('selectVal : ', selectVal);
-    console.log('timeseries?.length: ', timeseries?.length);
+    // console.log('selectVal : ', selectVal);
+    // console.log('timeseries?.length: ', timeseries?.length);
 
     if (d3Container.current && timeseries?.length > 0) {
-      // console.log('options: ', options);
-      // console.log('data: ', data);
-      // console.log('toArray(): ', data.series[0]?.fields[0].values.toArray());
       const history = timeseries.map((unix: any) => {
         return {
           date: unix,
@@ -80,31 +77,22 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
         };
       });
 
-      let forcastTime = timeseries.map((unix: any) => {
+      let forcastTime = timeseries.map(() => {
         // let dyDate = new Date(unix);
         // let plusTime = dyDate.valueOf() + 600000; // 1분 플러스
-        // console.log('getTime(): ', dyDate.getTime());
         let benchmark = timeseries[timeseries.length - 1]; // 최종 마지막 시간
 
         // let dyBenchdyDate = benchmark - dyDate.getTime();
-        // // console.log('benchmark: ', benchmark);
-        // console.log('기준시간: : ', new Date(benchmark));
-        // console.log('dyDate.getTime(): ', dyDate.getTime());
-        // // console.log("dyBenchdyDate: ", dyBenchdyDate)
-        // console.log('차이값: ', dyBenchdyDate);
         // // let plusTime = benchmark + dyBenchdyDate + 60000;
-        // console.log('체크: ', fieldKeys?.find(el => el.value === selectVal)?.value);
         // let plusTime = benchmark + dyBenchdyDate + fieldKeys?.find(el => el.value === selectVal)?.value;
         let plusTime = benchmark + fieldKeys?.find(el => el.value === selectVal)?.value;
         return {
           myDate: plusTime,
         };
       });
-      // console.log('fotcastTime: ', forcastTime);
+      
       const indexMeasure = measure.map((elem: any, i: any) => [i, elem]);
-      // console.log('indexMeasure: ', indexMeasure);
       const forecastResult = forcastTime.map((elem: { myDate: Date }, i: number) => {
-        // console.log(elem.valueOf());
         const { myDate } = elem;
         return {
           // date: new Date(elem),
@@ -113,14 +101,10 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
         };
       });
 
-      // console.log('timeseries : ', timeseries);
-      // console.log('forecastResult : ', forecastResult);
       const attachedForecastResult = forecastResult.concat({
         date: new Date(timeseries[timeseries.length - 1]),
         volume: measure[measure.length - 1],
       });
-      // console.log('currenHistory: ', currentHistory);
-      // console.log('attachedForecastResult: ', attachedForecastResult);
 
       // 화면 지우기
       // const svg = d3.select('svg');
@@ -140,26 +124,35 @@ export const MyPanel: React.FC<Props> = ({ options, data, width, height }) => {
 
       const line = d3
         .line<MyPropsType>()
+        // .x(d => x(d?.date!))
+        // .y(d => y(d?.volume!));
         .x(d => x(d?.date as Date))
         .y(d => y(d?.volume as number));
+        
+        // const line = d3
+        //   .line<MyPropsType>()
+        //   .x(d => { 
+        //         console.log(d.date?.valueOf()); 
+        //         return x(d.date?.valueOf() as number);
+        //     })
+        //   .y(d => {
+        //       console.log(d.volume?.valueOf());
+        //       return y(d.volume?.valueOf() as number);
+        //     });
 
       x.domain([
-        d3.min<MyPropsType>(currentHistory, d => d.date as Date),
-        d3.max<MyPropsType>(attachedForecastResult, d => d.date as Date),
+        // 디버그 방법
+        // d3.min<MyPropsType>(currentHistory, (dtm: MyPropsType,idx: any,arr: any) => { console.log("d3.min: ", dtm); return null; }),
+        d3.min<MyPropsType>(currentHistory, ({date}) => {
+          return date as any
+        }) as any,
+        // d3.max<MyPropsType>(attachedForecastResult, (dtm: MyPropsType) => dtm.date?.toISOString()) as any,
+        d3.max<MyPropsType>(attachedForecastResult, (dtm: MyPropsType) => dtm.date! as any),
       ]);
       y.domain([
-        d3.min<MyPropsType>(currentHistory, d => d.volume as number),
-        d3.max<MyPropsType>(currentHistory, d => d.volume as number),
+        d3.min<MyPropsType>(currentHistory, ({volume}) => volume as any) as any,
+        d3.max<MyPropsType>(currentHistory, (dtm: MyPropsType) => dtm.volume as any) as any,
       ]);
-
-      // x.domain([
-      //   d3.min<MyPropsType>(currentHistory, d => (d.date !== undefined ? (d?.date as any) : null)),
-      //   d3.max<MyPropsType>(attachedForecastResult, d => (d.date !== undefined ? (d?.date as any) : null)),
-      // ]);
-      // y.domain([
-      //   d3.min<MyPropsType>(currentHistory, d => (d.volume !== undefined ? (d?.volume as any) : 0)),
-      //   d3.max<MyPropsType>(currentHistory, d => (d.volume !== undefined ? (d?.volume as any) : 0)),
-      // ]);
 
       // x 측 그려줌
       innerChart

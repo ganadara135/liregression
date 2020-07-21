@@ -36,7 +36,7 @@
       { "name": "Piechart options", "path": "img/piechart-options.png" }
     ],
     "version": "1.0.0",
-    "updated": "2020-07-20"
+    "updated": "2020-07-21"
   },
   "dependencies": {
     "grafanaVersion": "7.0.0",
