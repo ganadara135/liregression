@@ -31,7 +31,7 @@
     "screenshots": [
       { "name": "Main Image", "path": "img/60minutes.png" },
       { "name": "Time Interval", "path": "img/select-time-interval.png" },
-      { "name": "Time Range", "path": "img/select-time-ranges.png" },
+      { "name": "Time Range", "path": "img/select-time-ranges.png" }
     ],
     "version": "%VERSION%",
     "updated": "%TODAY%"
