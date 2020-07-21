@@ -492,8 +492,8 @@ var MyPanel = function MyPanel(_a) {
         return y_1((_a = d) === null || _a === void 0 ? void 0 : _a.volume);
       }); // const line = d3
       //   .line<MyPropsType>()
-      //   .x(d => { 
-      //         console.log(d.date?.valueOf()); 
+      //   .x(d => {
+      //         console.log(d.date?.valueOf());
       //         return x(d.date?.valueOf() as number);
       //     })
       //   .y(d => {

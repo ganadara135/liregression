@@ -128,11 +128,10 @@ export const MyPanel: React.FC<Props> = ({ data, width, height }) => {
         // .y(d => y(d?.volume!));
         .x(d => x(d?.date as Date))
         .y(d => y(d?.volume as number));
-        
         // const line = d3
         //   .line<MyPropsType>()
-        //   .x(d => { 
-        //         console.log(d.date?.valueOf()); 
+        //   .x(d => {
+        //         console.log(d.date?.valueOf());
         //         return x(d.date?.valueOf() as number);
         //     })
         //   .y(d => {
@@ -143,14 +142,14 @@ export const MyPanel: React.FC<Props> = ({ data, width, height }) => {
       x.domain([
         // 디버그 방법
         // d3.min<MyPropsType>(currentHistory, (dtm: MyPropsType,idx: any,arr: any) => { console.log("d3.min: ", dtm); return null; }),
-        d3.min<MyPropsType>(currentHistory, ({date}) => {
-          return date as any
+        d3.min<MyPropsType>(currentHistory, ({ date }) => {
+          return date as any;
         }) as any,
         // d3.max<MyPropsType>(attachedForecastResult, (dtm: MyPropsType) => dtm.date?.toISOString()) as any,
         d3.max<MyPropsType>(attachedForecastResult, (dtm: MyPropsType) => dtm.date! as any),
       ]);
       y.domain([
-        d3.min<MyPropsType>(currentHistory, ({volume}) => volume as any) as any,
+        d3.min<MyPropsType>(currentHistory, ({ volume }) => volume as any) as any,
         d3.max<MyPropsType>(currentHistory, (dtm: MyPropsType) => dtm.volume as any) as any,
       ]);
 
