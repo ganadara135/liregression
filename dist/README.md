@@ -48,6 +48,14 @@ https://grafana.com/tutorials/build-a-panel-plugin-with-d3/#8
 
 
 
+
+## pull request 시 참고사항
+1. CircleCI pipline 을 통해서 코딩 규칙 테스트 완료후 진행
+1. pull request 는 github.com 온라인 페이지에서 진행
+1. bellow is a image for how to do pull request to Grafana plugin
+![스크린샷 2020-07-22 05 45 01](https://user-images.githubusercontent.com/24896007/88105603-23621f00-cbdf-11ea-9719-2b136cfa358e.png)
+
+
 ### individual part
 d3-array -> index.d.ts 관련부분
 
