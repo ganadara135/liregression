@@ -34,7 +34,7 @@
       { "name": "Time Range", "path": "img/select-time-ranges.png" }
     ],
     "version": "1.0.0",
-    "updated": "2020-07-21"
+    "updated": "2020-08-02"
   },
   "dependencies": {
     "grafanaVersion": "7.0.0",
